@@ -14,18 +14,45 @@ h1 {
 .leaderboard {
     margin: 0 auto;
     display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.leaderboard .leaderboard-ranks {
+    height: 580px !important;
+    display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    width: 750px;
-    row-gap: 50px;
+    align-items: center;
+    width: 49px;
 }
 
-.leaderboard .leaderboard-position {
-    width: 100%;
+.leaderboard .leaderboard-ranks .rank {
+    height: 60px !important;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.leaderboard .leaderboard-ranks .rank-spacer {
+    height: 20px;
+}
+
+.leaderboard .leaderboard-positions {
+width: 100%;
     user-select: none;
     transition: .2s ease;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    width: 700px;
+    row-gap: 50px;
 }
 
 .leaderboard .rank {
@@ -34,7 +61,7 @@ h1 {
     color: white;
 }
 
-.leaderboard .details {
+.leaderboard .leaderboard-positions .position {
     display: inline-block;
     background-color: #555;
     box-shadow: 0 0 15px 5px #222;
@@ -44,11 +71,11 @@ h1 {
     height: 20px;
 }
 
-.leaderboard .details p {
+.leaderboard .leaderboard-positions .position p {
     display: inline;
 }
 
-.leaderboard .details .points {
+.leaderboard .leaderboard-positions .position .points {
     float: right;
     margin: 0 auto;
     color: #7480fd;
