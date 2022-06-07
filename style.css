@@ -4,5 +4,51 @@ body {
     text-align: center;
     font-family: "Inter", sans-serif;
     background-color: #333;
+    color: #ccc;
+}
+
+h1 {
     color: #eee;
+}
+
+.leaderboard {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    width: 750px;
+    row-gap: 50px;
+}
+
+.leaderboard .leaderboard-position {
+    width: 100%;
+    user-select: none;
+    transition: .2s ease;
+}
+
+.leaderboard .rank {
+    margin-right: 20px;
+    display: inline;
+    color: white;
+}
+
+.leaderboard .details {
+    display: inline-block;
+    background-color: #555;
+    border-radius: 25px;
+    padding: 10px 20px;
+    width: 300px !important;
+    height: 20px;
+}
+
+.leaderboard .details p {
+    display: inline;
+}
+
+.leaderboard .details .points {
+    float: right;
+    margin: 0 auto;
+    color: #7480fd;
 }
