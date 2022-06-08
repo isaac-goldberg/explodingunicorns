@@ -11,59 +11,61 @@
     </head>
 
     <body>
-        <h1 style="margin-bottom: 50px">Exploding Unicorns Leaderboard</h1>
+        <h1>Exploding Unicorns Leaderboard</h1>
+
+        <div id="entry-form" class="entry-form">
+            <input type="text" placeholder="Full Name..." id="entry-name">
+            <input type="text" placeholder="Points..." id="entry-points">
+            <button id="entry-submit">Submit</button>
+        </div>
+        
+        <br/>
 
         <div class="leaderboard">
             <div class="leaderboard-ranks">
                 <div class="rank">1</div>
-                <div class="rank-spacer"></div>
                 <div class="rank">2</div>
-                <div class="rank-spacer"></div>
                 <div class="rank">3</div>
-                <div class="rank-spacer"></div>
                 <div class="rank">4</div>
-                <div class="rank-spacer"></div>
                 <div class="rank">5</div>
-                <div class="rank-spacer"></div>
                 <div class="rank">6</div>
-                <div class="rank-spacer"></div>
                 <div class="rank">7</div>
             </div>
 
-            <div class="leaderboard-positions">
-                <div class="position">
-                    <p style="color: #ffd700; text-shadow: 0px 0px 10px #FFD700, 0px 0px 5px #FFD700;" class="user">N/A</p>
-                    <p class="points">17 pts</p>
+            <div class="leaderboard-entries">
+                <div class="entry" id="entry-1">
+                    <p class="user first-place">N/A</p>
+                    <p class="points"></p>
                 </div>
 
-                <div class="position">
-                    <p style="text-shadow: 0px 0px 10px #C0C0C0, 0px 0px 5px #C0C0C0;" class="user">N/A</p>
-                    <p class="points">16 pts</p>
+                <div class="entry" id="entry-2">
+                    <p class="user second-place">N/A</p>
+                    <p class="points"></p>
                 </div>
 
-                <div class="position">
-                    <p style="color: #B08D57; text-shadow: 0px 0px 10px #CD7F32, 0px 0px 5px #CD7F32;" class="user">N/A</p>
-                    <p class="points">15 pts</p>
+                <div class="entry" id="entry-3">
+                    <p class="user third-place">N/A</p>
+                    <p class="points"></p>
                 </div>
 
-                <div class="position">
+                <div class="entry" id="entry-4">
                     <p class="user">N/A</p>
-                    <p class="points">14 pts</p>
+                    <p class="points"></p>
                 </div>
 
-                <div class="position">
+                <div class="entry" id="entry-5">
                     <p class="user">N/A</p>
-                    <p class="points">13 pts</p>
+                    <p class="points"></p>
                 </div>
 
-                <div class="position">
+                <div class="entry" id="entry-6">
                     <p class="user">N/A</p>
-                    <p class="points">12 pts</p>
+                    <p class="points"></p>
                 </div>
 
-                <div class="position">
+                <div class="entry" id="entry-7">
                     <p class="user">N/A</p>
-                    <p class="points">11 pts</p>
+                    <p class="points"></p>
                 </div>
             </div>
         </div>
