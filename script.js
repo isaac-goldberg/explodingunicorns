@@ -36,14 +36,30 @@ ready(function(){
 // HELPER FUNCTIONS
 function newEntry() {
     let { name, points } = getInputs();
-        
-    let entries = getEntries();
-    entries.push({
-        rank: null, name, points
-    });
+    var entry = { rank: null, name, points };
 
+    // push the new entry to the existing entries array
+    let entries = getEntries();
+    entries.push(entry);
+
+    // sort the entries and give each one a rank
     let sortedEntries = sortEntries(entries);
     setEntries(sortedEntries);
+
+    // get the updated entry which now has a rank, and render it onto the site
+    let updatedEntry = sortedEntries.find(e => e.name === entry.name);
+    renderNewEntry(updatedEntry);
+}
+
+function renderNewEntry(data) {
+    // var div = document.createElement("div");
+    // div.classList.add("entry");
+    // div.id = `entry-${data.rank}`;
+
+    // div.style.transform = "transformY(900px)";
+
+    // let bottomEntry = document.getElementById("entry-7");
+    // bottomEntry.
 }
 
 function getEntries() {
