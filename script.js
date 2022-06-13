@@ -41,10 +41,10 @@ function submitEntryData() {
 
 // HELPER FUNCTIONS
 function newEntry() {
-    let { name, points } = getInputs();
+    let { name, points, dead } = getInputs();
     if (!name || !points) return;
 
-    var entry = { rank: null, name, points };
+    var entry = { rank: null, name, points, dead };
     resetInputs();
 
     // push the new entry to the existing entries array
@@ -176,9 +176,14 @@ function createEntry(data) {
     return inner;
 }
 
+function createDeadIndicator() {
+    return "<"
+}
+
 function getInputs() {
     let name = document.getElementById("entry-name");
     let points = document.getElementById("entry-points");
+    let dead = document.getElementById("entry-isDead").checked;
     let nameValue = name.value.trim();
 
     if (nameValue.length == 0 || points.value.length == 0) {
@@ -187,7 +192,7 @@ function getInputs() {
             color: "red",
             autoClose: 3000,
         });
-        return { name: null, points: null };
+        return { name: null, points: null, dead };
     }
 
     let pointsValue;
@@ -201,7 +206,7 @@ function getInputs() {
         });
     }
 
-    return { name: nameValue, points: pointsValue };
+    return { name: nameValue, points: pointsValue, dead };
 }
 
 function resetInputs() {
@@ -209,6 +214,8 @@ function resetInputs() {
     let points = document.getElementById("entry-points");
     name.value = ""; name.blur();
     points.value = ""; points.blur();
+
+    document.getElementById("entry-isDead").checked = false;
     return true;
 }
 
@@ -258,7 +265,7 @@ function initEntries() {
 function initModals() {
     new jBox("Modal", {
         attach: "#form-modal-trigger",
-        height: 250,
+        height: 260,
         overlay: false,
         title: "Admin Menu",
         draggable: "title",
@@ -267,6 +274,8 @@ function initModals() {
         <input type="text" placeholder="Full Name" id="entry-name" autocomplete="off">
         <input type="text" placeholder="Points" id="entry-points" autocomplete="off">
         <button id="entry-submit" type="submit">Submit</button>
+        <input style="margin-top: 10px" type="checkbox" id="entry-isDead">
+        <label for="entry-isDead">Was this player dead?</label>
         </form>
 
         <hr/>
