@@ -6,18 +6,17 @@
         <link rel="icon" type="image/x-icon" href="favicon.png">
 
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="jBox.css">
 
+        <script src="jQuery.js"></script>
+        <script src="jBox.js"></script>
         <script src="script.js"></script>
     </head>
 
     <body>
         <h1>Exploding Unicorns Leaderboard</h1>
 
-        <div id="entry-form" class="entry-form">
-            <input type="text" placeholder="Full Name..." id="entry-name">
-            <input type="text" placeholder="Points..." id="entry-points">
-            <button id="entry-submit">Submit</button>
-        </div>
+        <button id="form-modal-trigger" class="button">Open Admin Menu</button>
         
         <br/>
 
@@ -32,40 +31,54 @@
                 <div class="rank">7</div>
             </div>
 
-            <div class="leaderboard-entries">
-                <div class="entry" id="entry-1">
-                    <p class="user first-place">N/A</p>
-                    <p class="points"></p>
+            <div class="leaderboard-entries" id="leaderboard-entries">
+                <div class="entry-container" id="entry-1">
+                    <div class="inner">
+                        <p class="name">N/A</p>
+                        <p class="points"></p>
+                    </div>
                 </div>
 
-                <div class="entry" id="entry-2">
-                    <p class="user second-place">N/A</p>
-                    <p class="points"></p>
+                <div class="entry-container" id="entry-2">
+                    <div class="inner">
+                        <p class="name">N/A</p>
+                        <p class="points"></p>
+                    </div>
                 </div>
 
-                <div class="entry" id="entry-3">
-                    <p class="user third-place">N/A</p>
-                    <p class="points"></p>
+                <div class="entry-container" id="entry-3">
+                    <div class="inner">
+                        <p class="name">N/A</p>
+                        <p class="points"></p>
+                    </div>
                 </div>
 
-                <div class="entry" id="entry-4">
-                    <p class="user">N/A</p>
-                    <p class="points"></p>
+                <div class="entry-container" id="entry-4">
+                    <div class="inner">
+                        <p class="name">N/A</p>
+                        <p class="points"></p>
+                    </div>
                 </div>
 
-                <div class="entry" id="entry-5">
-                    <p class="user">N/A</p>
-                    <p class="points"></p>
+                <div class="entry-container" id="entry-5">
+                    <div class="inner">
+                        <p class="name">N/A</p>
+                        <p class="points"></p>
+                    </div>
                 </div>
 
-                <div class="entry" id="entry-6">
-                    <p class="user">N/A</p>
-                    <p class="points"></p>
+                <div class="entry-container" id="entry-6">
+                    <div class="inner">
+                        <p class="name">N/A</p>
+                        <p class="points"></p>
+                    </div>
                 </div>
 
-                <div class="entry" id="entry-7">
-                    <p class="user">N/A</p>
-                    <p class="points"></p>
+                <div class="entry-container" id="entry-7">
+                    <div class="inner">
+                        <p class="name">N/A</p>
+                        <p class="points"></p>
+                    </div>
                 </div>
             </div>
         </div>

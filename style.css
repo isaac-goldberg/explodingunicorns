@@ -6,6 +6,8 @@
 :root {
     --blurple: #7480fd;
     --background-primary: #333;
+    --background-secondary: #4A4A4A;
+    --background-secondary-border: #535353;
 }
 
 body {
@@ -13,19 +15,27 @@ body {
     font-family: "Inter", sans-serif !important;
     background-color: var(--background-primary);
     color: #ccc;
+    overflow: hidden;
 }
 
 h1 {
     color: #eee;
 }
 
+h4 {
+    font-weight: normal;
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
 .entry-form {
-    width: 580px;
+    width: 310px;
+    text-align: center;
     margin: 0 auto;
 }
 input {
     border-radius: 15px;
-    padding: 10px 20px;
+    padding: 10px 10px;
     background-color: #444;
     outline: none;
     border: 2px solid var(--background-primary);
@@ -41,34 +51,60 @@ input:active, input:focus {
     border: 2px solid var(--blurple);
 }
 input#entry-name {
-    width: 50%;
+    width: 40%;
 }
 input#entry-points {
-    width: 12%;
+    width: 16%;
     text-align: center;
 }
 input::placeholder {
     font-family: "Inter", sans-serif;
 }
-.entry-form button {
+button {
     border-radius: 15px;
-    padding: 10px 0;
+    padding: 10px 20px;
     background-color: lime;
     outline: none;
     border: 2px solid var(--background-primary);
     color: #333;
     font-family: "Inter", sans-serif;
     font-size: 16px;
-    width: 15%;
     cursor: pointer;
     transition: .3s ease, transform .15s ease;
 }
-.entry-form button:hover {
+button:hover {
     background-color: #00ff0070;
 }
-.entry-form button:active {
+button:active {
     background-color: #00ff0040;
     transform: scale(1.12);
+}
+.entry-form button {
+    width: 21%;
+    padding: 10px 0 !important;
+}
+button#form-modal-trigger {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+hr {
+    border: 1px solid #444;
+    margin: 25px 0;
+}
+
+button.danger {
+    background-color: red;
+    width: 100%;
+    color: #eee;
+}
+button.danger:hover {
+    background-color: #ff000070;
+}
+button.danger:active {
+    background-color: #ff000040;
+    transform: scale(1.075);
 }
 
 .leaderboard {
@@ -77,6 +113,7 @@ input::placeholder {
     justify-content: center;
     align-content: center;
     align-items: center;
+    overflow: visible;
 }
 
 .leaderboard .leaderboard-ranks {
@@ -108,40 +145,71 @@ input::placeholder {
     flex-wrap: wrap;
     align-content: space-around;
     justify-content: space-around;
-    width: 425px;
+    width: 360px;
     height: 580px;
+    overflow: visible;
 }
 
-.leaderboard .leaderboard-entries .entry {
+.leaderboard .leaderboard-entries .entry-container .inner {
     display: inline-block;
     background-color: #555;
     box-shadow: 0 0 10px 2.5px #222;
     border-radius: 25px;
     padding: 10px 20px;
-    width: 310px !important;
+    width: 250px !important;
     height: 20px;
+    transition: .75s ease;
 }
 
-.entry p {
+.inner p {
     display: inline;
 } 
 
-.entry .points {
+.inner .points {
     float: right;
     margin: 0 auto;
     color: var(--blurple);
 }
 
-.leaderboard .leaderboard-entries .entry .first-place {
+#entry-1 .inner p.name {
     color: #ffd700;
     text-shadow: 0px 0px 10px #FFD700, 0px 0px 5px #FFD700;
 }
 
-.leaderboard .leaderboard-entries .entry .second-place {
+#entry-2 .inner p.name {
     text-shadow: 0px 0px 10px #C0C0C0, 0px 0px 5px #C0C0C0;
 }
 
-.leaderboard .leaderboard-entries .entry .third-place {
+#entry-3 .inner p.name {
     color: #B08D57;
     text-shadow: 0px 0px 10px #CD7F32, 0px 0px 5px #CD7F32;
+}
+
+/* making the inner divs have offset when transitioning */
+#entry-1 .inner.horizontalTransform {
+    transition: .75s ease !important;
+}
+
+#entry-2 .inner.horizontalTransform {
+    transition: .85s ease !important;
+}
+
+#entry-3 .inner.horizontalTransform {
+    transition: .95s ease !important;
+}
+
+#entry-4 .inner.horizontalTransform {
+    transition: 1.05s ease !important;
+}
+
+#entry-5 .inner.horizontalTransform {
+    transition: 1.15s ease !important;
+}
+
+#entry-6 .inner.horizontalTransform {
+    transition: 1.25s ease !important;
+}
+
+#entry-7 .inner.horizontalTransform {
+    transition: 1.35s ease !important;
 }
