@@ -115,7 +115,7 @@ function newEntry() {
     resetInputs();
 
     // check if all values were provided and then create the entry object
-    if (!name || !points) return;
+    if (!name || !points || points <= 0) return;
     var entry = { rank: null, name, points, dead };
 
     // save the entry to archive
@@ -123,6 +123,7 @@ function newEntry() {
 
     // push the new entry to the existing entries array
     let entries = getEntries();
+    
     entries.push(entry);
 
     // sort the entries and give each one a rank
@@ -312,11 +313,11 @@ function getInputs() {
         });
     }
 
-    if (pointsValue == 0) {
+    if (pointsValue <= 0) {
         new jBox("Notice", {
             content: "Need more than 0 points to make the leaderboard",
             color: "red",
-        })
+        });
     }
     
     return { name: nameValue, points: pointsValue, dead };
@@ -414,7 +415,7 @@ function initModals() {
 
         <hr/>
 
-        <p class="reminder" style="font-size: 12px">Admin note: don't enter the same person's name twice - delete their name first, then create a new entry for them.</p>
+        <p class="reminder" style="font-size: 12px">Admin note: never enter the same person's name twice - delete their name first, then create a new entry for them.</p>
 
         <script>
         $("#entry-form").submit(function(e) { e.preventDefault(); submitEntryData() });

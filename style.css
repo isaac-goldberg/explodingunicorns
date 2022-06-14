@@ -95,7 +95,8 @@ hr {
 }
 
 button.danger, button.warning {
-    width: 100%;
+    width: 340px;
+    display: block;
 }
 button.danger {
     background-color: red;
