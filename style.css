@@ -29,7 +29,7 @@ h4 {
 }
 
 .entry-form {
-    width: 310px;
+    width: 340px;
     text-align: center;
     margin: 0 auto;
 }
@@ -51,7 +51,7 @@ input:active, input:focus {
     border: 2px solid var(--blurple);
 }
 input#entry-name {
-    width: 40%;
+    width: 46%;
 }
 input#entry-points {
     width: 16%;
@@ -94,9 +94,11 @@ hr {
     margin: 25px 0;
 }
 
+button.danger, button.warning {
+    width: 100%;
+}
 button.danger {
     background-color: red;
-    width: 100%;
     color: #eee;
 }
 button.danger:hover {
@@ -105,6 +107,30 @@ button.danger:hover {
 button.danger:active {
     background-color: #ff000040;
     transform: scale(1.075);
+}
+
+button.warning {
+    background-color: lime;
+}
+button.warning:hover {
+    background-color: #00ff0070;
+}
+button.warning:active {
+    background-color: #00ff0040;
+    transform: scale(1.075);
+}
+
+.delete-entry-form {
+    width: 340px;
+    text-align: center;
+    margin: 0 auto;
+}
+.delete-entry-form #delete-entry-name {
+    width: 50%;
+}
+
+.reminder {
+    width: 340px;
 }
 
 .leaderboard {
@@ -138,7 +164,6 @@ button.danger:active {
 }
 
 .leaderboard .leaderboard-entries {
-    user-select: none;
     transition: .2s ease;
     display: flex;
     flex-direction: column;
@@ -169,6 +194,12 @@ button.danger:active {
     float: right;
     margin: 0 auto;
     color: var(--blurple);
+    user-select: none;
+}
+
+.inner .points i {
+    color: red;
+    margin-left: 10px;
 }
 
 #entry-1 .inner p.name {

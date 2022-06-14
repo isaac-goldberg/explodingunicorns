@@ -1,0 +1,26 @@
+.fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto
+}
+
+
+.fa-skull:before {
+    content: "\f54c"
+}
+
+@font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(fontawesome.woff2) format("woff2");
+}
+
+.fas {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900
+}

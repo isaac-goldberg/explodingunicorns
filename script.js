@@ -1,6 +1,7 @@
 /////////////////////////////////////////
 // [BUG REMINDERS] //
 // [1] Entries with the same name will get their points messed up when rendering the animation
+// [2] Occasionally lags and an entry may suddenly flash across the screen for a splitsecond
 /////////////////////////////////////////
 
 // constants
@@ -26,7 +27,7 @@ ready(function(){
 });
 
 
-// functions called from inline JavaScript in the HTML
+// FUNCTIONS CALLED FROM INLINE JS
 function resetLeaderboard() {
     deleteEntries();
 
@@ -39,13 +40,86 @@ function submitEntryData() {
     newEntry();
 }
 
-// HELPER FUNCTIONS
-function newEntry() {
-    let { name, points, dead } = getInputs();
-    if (!name || !points) return;
+function deleteEntry() {
+    let name = document.getElementById("delete-entry-name");
+    let nameValue = name.value.trim();
 
-    var entry = { rank: null, name, points, dead };
+    if (!nameValue || nameValue.length == 0) {
+        new jBox("Notice", {
+            content: "No input was detected for the name input box",
+            color: "red",
+        });
+        return;
+    }
+
+    let entryFound = false;
+    let entries = getEntries();
+    entries = entries.filter((e) => {
+        if (e.name.trim().toLowerCase() != nameValue.trim().toLowerCase()) {
+            return true;
+        } else {
+            entryFound = true;
+            return false;
+        }
+    });
+
+    if (!entryFound) {
+        new jBox("Notice", {
+            content: "No entry found with that name",
+            color: "yellow",
+        });
+        name.value = "";
+        return;
+    }
+
+    let sortedEntries = sortEntries(entries);
+    setEntries(sortedEntries);
+
+    window.location.reload();
+    return;
+}
+
+function postWebhook() {
+    let archive = JSON.parse(window.localStorage.getItem("archive") || "[]");
+
+    var smallArrays = [];
+    var maxLen = 10;
+    for (var i=0; i < archive.length; i += maxLen) {
+        smallArrays.push(archive.slice(i, i + maxLen));
+    }
+    
+    smallArrays.forEach(async (arr) => {
+        let str = `\`\`\`css\n`;
+        arr.forEach((e) => {
+            str += `${e.name} ${e.points}${e.dead ? " [Dead]" : ""}\n`;
+        });
+        str += "```";
+
+        await fetch("https://discord.com/api/webhooks/986061690732965918/XEuisjJGbqCbi9b3VeFsvuJliWDHRku1x0fT5ASUJGQTJJE8m_sQ6I-jIFsAl6p_auwd", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                "name": "Exploding Unicorns",
+                "content": str,
+            }),
+        });
+    });
+}
+
+// PAGE RENDERING FUNCTIONS
+function newEntry() {
+    // get the values of the input boxes and checkboxes, and reset the form
+    let { name, points, dead } = getInputs();
     resetInputs();
+
+    // check if all values were provided and then create the entry object
+    if (!name || !points) return;
+    var entry = { rank: null, name, points, dead };
+
+    // save the entry to archive
+    archiveEntry(entry);
 
     // push the new entry to the existing entries array
     let entries = getEntries();
@@ -57,8 +131,23 @@ function newEntry() {
 
     // get the updated entry which now has a rank, and render it onto the site
     let updatedEntry = sortedEntries.find(e => e.name === entry.name);
-    if (!updatedEntry) return false;
+    if (!updatedEntry) {
+        new jBox("Notice", {
+            content: "Not enough points to make the leaderboard (entry was still saved to archive)",
+            color: "yellow",
+        });
+
+        return false;
+    }
     renderNewEntry(updatedEntry);
+}
+
+function archiveEntry(data) {
+    let arr = JSON.parse(window.localStorage.getItem("archive") || "[]");
+    let clone = { name: data.name, points: data.points, dead: data.dead };
+    arr.push(clone);
+    window.localStorage.setItem("archive", JSON.stringify(arr));
+    return;
 }
 
 function renderNewEntry(data) {
@@ -76,7 +165,7 @@ function renderNewEntry(data) {
         if (i < data.rank) {
             // move entry to the right
             currentEntryInner.classList.add("horizontalTransform");
-            currentEntryInner.style.transform = "translateX(360px)";
+            currentEntryInner.style.transform = "translateX(340px)";
 
             // after other elements have transitioned, move back into place
             setTimeout(function () {
@@ -100,6 +189,10 @@ function renderNewEntry(data) {
                 container.appendChild(newInner);
                 newInner.style.transform = "translateY(-750px)";
                 newInner.style.transition = `${entryTransition / 1000}s ease !important;`;
+
+                // create tooltips for death indicators
+                initDeadTooltip();
+                
                 setTimeout(function () {
                     newInner.style.transform = "translateY(0)";
                     isTransitioning = false;
@@ -129,6 +222,7 @@ function renderNewEntry(data) {
     }
 }
 
+// HELPER FUNCTIONS
 function getEntries() {
     try {
         // get entries from LocalStorage
@@ -168,7 +262,11 @@ function createEntry(data) {
 
     let pPoints = document.createElement("p");
     pPoints.classList.add("points");
-    pPoints.innerText = data.points;
+    if (!data.dead) {
+        pPoints.innerText = data.points;
+    } else {
+        pPoints.innerHTML = `${data.points} ${createDeadIndicator()}`
+    }
 
     inner.appendChild(pName);
     inner.appendChild(pPoints);
@@ -177,7 +275,17 @@ function createEntry(data) {
 }
 
 function createDeadIndicator() {
-    return "<"
+    return "<i class='fas fa-skull tooltip-dead'></i>";
+}
+
+function initDeadTooltip() {
+    $(".tooltip-dead").jBox("Tooltip", {
+        theme: "TooltipDark",
+        content: "This player died but still accumulated enough points to make the leaderboard",
+        position: {
+            y: "bottom",
+        },
+    });
 }
 
 function getInputs() {
@@ -190,7 +298,6 @@ function getInputs() {
         new jBox("Notice", {
             content: "No input was detected for the name and/or points input boxes",
             color: "red",
-            autoClose: 3000,
         });
         return { name: null, points: null, dead };
     }
@@ -202,10 +309,16 @@ function getInputs() {
         new jBox("Notice", {
             content: "Could not parse points value",
             color: "red",
-            autoClose: 3000,
         });
     }
 
+    if (pointsValue == 0) {
+        new jBox("Notice", {
+            content: "Need more than 0 points to make the leaderboard",
+            color: "red",
+        })
+    }
+    
     return { name: nameValue, points: pointsValue, dead };
 }
 
@@ -257,7 +370,12 @@ function initEntries() {
 
             nameElem.innerText = e.name;
 
-            pointsElem.innerText = e.points;
+            if (!e.dead) {
+                pointsElem.innerText = e.points;
+            } else {
+                pointsElem.innerHTML = `${e.points} ${createDeadIndicator()}`;
+                initDeadTooltip();
+            }
         });
     }
 }
@@ -265,7 +383,7 @@ function initEntries() {
 function initModals() {
     new jBox("Modal", {
         attach: "#form-modal-trigger",
-        height: 260,
+        height: 505,
         overlay: false,
         title: "Admin Menu",
         draggable: "title",
@@ -279,15 +397,33 @@ function initModals() {
         </form>
 
         <hr/>
-        <h4>Danger Zone</h4>
+
+        <form id="delete-entry-form" class="delete-entry-form">
+        <h4>Delete Entry</h4>
+        <input type="text" placeholder="Full Name" id="delete-entry-name" autocomplete="off">
+        <button id="entry-submit" type="submit">Delete</button>
+        </form>
+
+        <hr/>
+
+        <button class="button warning" onclick="postWebhook()">Post archive to Discord
+        <p style="font-size: 10px; margin: 0; font-style: italic;">Requires Internet connection</p>
+        </button>
         <button class="button danger" onclick="resetLeaderboard()" data-confirm="Are you sure you want to reset all leaderboard entries?">
         Reset Leaderboard</button>
+
+        <hr/>
+
+        <p class="reminder" style="font-size: 12px">Admin note: don't enter the same person's name twice - delete their name first, then create a new entry for them.</p>
+
         <script>
         $("#entry-form").submit(function(e) { e.preventDefault(); submitEntryData() });
         new jBox("Confirm", {
             confirmButton: "Okay",
             cancelButton: "No, cancel"
         });
+
+        $("#delete-entry-form").submit(function(e) { e.preventDefault(); deleteEntry() });
         </script>`
     });
 }
